@@ -14,7 +14,7 @@ def get_viglink_link(net_link, subid):
         response = requests.get(url.format(net_link, api_key, subid)).json()
         return response
     except:
-        raise CPAError("Данная партнерская программа не поддерживается")
+        raise VigLinkError("Данная партнерская программа не поддерживается")
 
 
 
