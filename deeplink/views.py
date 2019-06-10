@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .admitad_scripts import get_admitad_link, get_campaign_list, AdmitadCampaignError, AdmitadLinkError
@@ -11,7 +12,7 @@ from .jlvx import get_short_link, JLVXLinkError
 from .models import Good
 
 @method_decorator(csrf_exempt, name='dispatch')
-class DeeplinkAdmitad(CreateView):
+class DeeplinkAdmitad(LoginRequiredMixin, CreateView):
     def get(self, request):
         website = '867417'
         try:
@@ -72,7 +73,7 @@ class DeeplinkAdmitad(CreateView):
         post_item.save()
         return render(request, 'deeplink/preview.html', {'cpa': cpa, 'vk': vk, 'tg': tg, 'vk_message': post_item.vk_message, 'tg_message': post_item.tg_message, 'vk_photo': post_item.vk_photo, 'tg_photo': post_item.tg_photo})
 
-class DeeplinkVigLink(CreateView):
+class DeeplinkVigLink(LoginRequiredMixin, CreateView):
     def get(self, request):
         return render(request, 'deeplink/index.html', {'cpa': 'viglink'})
 
@@ -126,7 +127,7 @@ class DeeplinkVigLink(CreateView):
         post_item.save()
         return render(request, 'deeplink/preview.html', {'cpa': cpa, 'vk': vk, 'tg': tg, 'vk_message': post_item.vk_message, 'tg_message': post_item.tg_message, 'vk_photo': post_item.vk_photo, 'tg_photo': post_item.tg_photo})
 
-class SendPost(CreateView):
+class SendPost(LoginRequiredMixin, CreateView):
     def post(self, request):
         cpa = request.POST.get('cpa')
         last_good = Good.objects.last()
