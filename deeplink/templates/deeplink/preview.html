@@ -1,0 +1,30 @@
+{% load deeplink_extras %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+{% if vk %}
+    <h3>Сообщение Вконтакте</h3>
+    <pre>{{ vk_message |urlize }}</pre>
+{% endif %}
+
+{% if tg %}
+    <h3>Сообщение Telegram</h3>
+    <pre>{{ tg_message |safe |urlize }}</pre>
+{% endif %}
+
+<img src="{{ tg_photo |get_photo }}">
+<p></p>
+<form method="post" action="send/">
+    {% csrf_token %}
+    <input type="hidden" name="cpa" value="{{ cpa }}">
+    <button class="btn btn-primary" type="submit">Выложить пост</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Создание поста</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="#">jeleveux
+        <img src="https://static2.tgstat.com/public/images/channels/_0/5e/5ea311cf97cc3aeaab2ff97683048dcc.jpg" width="30" height="30" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                {% if cpa == 'admitad' %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/addpost/admitad/">Admitad <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addpost/viglink/">VigLink</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/addpost/viglink/">VigLink <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addpost/admitad/">Admitad</a>
+                    </li>
+                {% endif %}
+            </ul>
+        <span class="navbar-text">
+            Выберите партнерскую сеть в меню слева
+        </span>
+        </div>
+    </nav>
+    {% if cpa == 'admitad' %}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <select name="campaign" class="custom-select custom-select-sm">
+            {% for campaign in campaigns %}
+            <option value="{{ campaign.0 }}" selected>{{ campaign.1 }}</option>
+            {% endfor %}
+        </select>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Ссылки на товары:</label>
+            <input name="link1" type="text" class="form-control" id="formGroupExampleInput" required placeholder="link1 (обязательно)">
+        </div>
+        <div class="form-group">
+            <input name="link2" type="text" class="form-control" id="formGroupExampleInput" placeholder="link2">
+        </div>
+        <div class="form-group">
+            <input name="link3" type="text" class="form-control" id="formGroupExampleInput" placeholder="link3">
+        </div>
+        <div class="form-group">
+            <input name="link4" type="text" class="form-control" id="formGroupExampleInput" placeholder="link4">
+        </div>
+        <div class="form-group">
+            <input name="link5" type="text" class="form-control" id="formGroupExampleInput" placeholder="link5">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Введите текст поста:</label>
+            <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+        </div>
+        <div class="custom-file">
+            <input name="photo" type="file" class="custom-file-input" id="customFile" required>
+            <label class="custom-file-label" for="customFile">Прикрепите фото</label>
+        </div>
+        <div class="form-check">
+            <input name="tg" class="form-check-input" type="checkbox" value="tg" id="defaultCheck1" checked>
+            <label class="form-check-label" for="defaultCheck1">
+            Telegram
+            </label>
+        </div>
+        <div class="form-check">
+            <input name="vk" class="form-check-input" type="checkbox" value="vk" id="defaultCheck2" checked>
+            <label class="form-check-label" for="defaultCheck2">
+            VK
+            </label>
+        </div>
+        <button class="btn btn-primary" type="submit">Выложить пост</button>
+    </form>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="formGroupExampleInput">Ссылки на товары:</label>
+            <input name="link1" type="text" class="form-control" id="formGroupExampleInput" placeholder="link1 (обязательно)" required>
+        </div>
+        <div class="form-group">
+            <input name="link2" type="text" class="form-control" id="formGroupExampleInput" placeholder="link2">
+        </div>
+        <div class="form-group">
+            <input name="link3" type="text" class="form-control" id="formGroupExampleInput" placeholder="link3">
+        </div>
+        <div class="form-group">
+            <input name="link4" type="text" class="form-control" id="formGroupExampleInput" placeholder="link4">
+        </div>
+        <div class="form-group">
+            <input name="link5" type="text" class="form-control" id="formGroupExampleInput" placeholder="link5">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Введите текст поста:</label>
+            <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+        </div>
+        <div class="custom-file">
+            <input name="photo" type="file" class="custom-file-input" id="customFile" required>
+            <label class="custom-file-label" for="customFile">Прикрепите фото</label>
+        </div>
+        <div class="form-check">
+            <input name="tg" class="form-check-input" type="checkbox" value="tg" id="defaultCheck1" checked>
+            <label class="form-check-label" for="defaultCheck1">
+            Telegram
+            </label>
+        </div>
+        <div class="form-check">
+            <input name="vk" class="form-check-input" type="checkbox" value="vk" id="defaultCheck2" checked>
+            <label class="form-check-label" for="defaultCheck2">
+            VK
+            </label>
+        </div>
+        <button class="btn btn-primary" type="submit">Выложить пост</button>
+    </form>
+    {% endif %}
+</body>
+</html>
