@@ -1,4 +1,5 @@
 import requests
+import re
 
 api_key = '9d99dbe46c42b6f85f33504b3635c50c'
 
@@ -11,8 +12,9 @@ class VigLinkError(Exception):
 
 def get_viglink_link(net_link, subid):
     try:
-        response = requests.get(url.format(net_link, api_key, subid)).json()
-        return response
+        response = requests.get(url.format(net_link, api_key, subid)).text
+        link = re.findall(r'^http.?://.+$', response)
+        return link[0]
     except:
         raise VigLinkError("Данная партнерская программа не поддерживается")
 
